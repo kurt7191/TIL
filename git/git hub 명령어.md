@@ -45,6 +45,7 @@ merge
 1. git -add .
 
 2. git commit -m "`<message>`"
+
 3. git push origin master
 
 4. git pull origin master -> "상대방 가져오기"
@@ -56,6 +57,12 @@ merge
 7. git switch `branch name` -> 브랜치 이동
 
 8. git clone `<URL>` -> 레포 컴 복사.
+
+9. git  log -> commit 기록들 확인
+
+10. git log --oneline -> commit 이름 확인(코드네임)
+
+   
 
    
 
@@ -106,6 +113,28 @@ merge
    
 
    업로드~
+
+   
+
+   ### 과거 log로 돌아가기
+
+   
+
+   git log --oneline 으로 로그 확인하면 커밋 이름을 확인 가능
+
+   
+
+   git reset -h -> 인자 값들 확인
+
+   
+
+   git  reset --hard `<커밋이름>` => 입력한 커밋으로 가고, 그 커밋 이후의 것들은 없어짐
+
+   
+
+   
+
+   
 
    
 
