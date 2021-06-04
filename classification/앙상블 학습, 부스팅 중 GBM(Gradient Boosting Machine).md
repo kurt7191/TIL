@@ -12,9 +12,7 @@
 
 
 
-
-
-![다운로드](C:\Users\user\Desktop\다운로드.png)
+![다운로드](앙상블 학습, 부스팅 중 GBM(Gradient Boosting Machine).assets/다운로드.png)
 
 
 
