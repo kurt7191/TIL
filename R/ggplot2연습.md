@@ -22,9 +22,11 @@ ggplot(df, aes(x=month,y=rain)) +
 
 
 
+![barPlotTest](../../%EC%9E%84%EC%8B%9C/barPlotTest.png)
 
 
-![barPlotTest](C:/Users/user/Desktop/TIL/R/barPlotTest.png)
+
+
 
 ### histogram
 
@@ -42,7 +44,7 @@ ggplot(iris, aes(x=Sepal.Width,fill=Species, col = Species))+
 
 
 
-![종류별히스토](C:/Users/user/Desktop/TIL/R/%EC%A2%85%EB%A5%98%EB%B3%84%ED%9E%88%EC%8A%A4%ED%86%A0.png)
+![종류별히스토](../../%EC%9E%84%EC%8B%9C/%EC%A2%85%EB%A5%98%EB%B3%84%ED%9E%88%EC%8A%A4%ED%86%A0.png)
 
 
 
@@ -65,7 +67,9 @@ ggplot(iris, aes(Petal.Length,Petal.Width,col=Species)) +
   ggtitle('iris dataset')
 ```
 
-![종류별산점도](C:/Users/user/Desktop/TIL/R/%EC%A2%85%EB%A5%98%EB%B3%84%EC%82%B0%EC%A0%90%EB%8F%84.png)
+
+
+![종류별산점도](../../%EC%9E%84%EC%8B%9C/%EC%A2%85%EB%A5%98%EB%B3%84%EC%82%B0%EC%A0%90%EB%8F%84.png)
 
 
 
@@ -80,7 +84,7 @@ ggplot(iris, aes(y=Petal.Length)) +
 
 
 
-![boxplot](C:/Users/user/Desktop/TIL/R/boxplot.png)
+![boxplot](../../%EC%9E%84%EC%8B%9C/boxplot.png)
 
 
 
@@ -100,7 +104,7 @@ qplot(long, lat, data=m2, geom='polygon', fill = group,
 
 ```
 
-![korJapan](C:/Users/user/Desktop/TIL/R/korJapan.png)
+![korJapan](../../%EC%9E%84%EC%8B%9C/korJapan.png)
 
 
 
