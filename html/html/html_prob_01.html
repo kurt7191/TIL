@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form>
+        <fieldset>
+            <legend>납품자정보</legend>
+            <table>
+                <tr>
+                    <td><label for = "username">1. 납품자명 : </label></td>
+                    <td><input type = "text" id = "username" placeholder = "name"></td>
+                </tr>
+                <tr>
+                    <td><label for = "mail">2. email : </label></td>
+                    <td><input type = "email" id = "mail" placeholder = "answer@naver.com"></td>
+                </tr>
+                <tr>
+                    <td><label for = "homepage">3. 홈페이지 : </label></td>
+                    <td><input type = "url" id = "homepage" placeholder = "http://"></td>
+                </tr>
+            </table>
+        </fieldset>
+        <fieldset>
+            <legend>납품정보</legend>
+            <table>
+                <tr>
+                    <td><label for = "prod">상품명 : </label></td>
+                    <td>
+                        <select>
+                            <option>dog1004</option>
+                            <option>catchicken</option>
+                            <option>milk</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td><label for = "prodNum">납품수량 : </label></td>
+                    <td><input type = "number" id = "prodNum" placeholder = "최소 10이상"></td>
+                </tr>
+                <tr>
+                    <td><label for = "hirachy">납품등급 : </label></td>
+                    <td><input type = "range" id = "hirachy" min = "0" max = "10" step = "2"></td>
+                </tr>
+                <tr>
+                    <td><label for = "extra">기타사항 : </label></td>
+                    <td><textarea id = "extra" cols = "22", rows = "2"></textarea></td>
+                </tr>
+            </table>
+            
+        </fieldset>
+        <!-- 다해놓고 사진을 스윽 봤더니 리스트로 만들었어야 했다는 그런 생각이 들어서.. -->
+        <!-- 혹시 몰라 리스트로도 해봤습니다... 사진을 보니 앞에 ol이랑 ul있던데 흔적이 있어 보여서요 -->
+        <!-- ㅠㅠ... -->
+        <fieldset>
+            <legend>납품자정보</legend>
+            <ol>
+                <li>납품자명 : <input type = "text" id = "username" placeholder = "name"></li>
+                <li>email : <input type = "email" id = "mail" placeholder = "answer@naver.com"></li>
+                <li>홈페이지 : <input type = "url" id = "homepage" placeholder = "http://"></li>
+            </ol>
+        </fieldset>
+        <fieldset>
+            <legend>납품정보</legend>
+                <ul>
+                    <li>상품명 : <select><option>dog1004</option><option>dot2</option></select></li>
+                    <li>납품수량 : <input type = "number" id = "prodNum" placeholder = "최소 10이상"></li>
+                    <li>납품등급 : <input type = "range" id = "hirachy" min = "0" max = "10" step = "2"></li>
+                    <li>기타사항 : <textarea id = "extra" cols = "22", rows = "2"></textarea></li>
+                </ul>
+        </fieldset>
+        <input type = "submit" value = "send messsage">
+    </form>
+</body>
+</html>
