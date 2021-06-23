@@ -325,5 +325,87 @@ path를 새로 입력해준다.
 
 
 
+데이터를 삭제하지 않고 todo 리스트를 화면창에만 보이지 않게 만들 수 있다.
+
+
+
+먼저 mvc의 뷰부분을 수정한다.
+
+
+
+```django
+            <div class="toDoDiv">
+                <ul class="list-group">
+                    {% for todo in todos %}
+                    {%if todo.isDone == False %}
+                    <!-- <form action="./doneTodo/" method="GET"> -->
+                    <form action="./boolTodo/" method="GET">
+                        <div class="input-group" name='todo1'>
+                            <li class="list-group-item">{{todo.content }}</li>
+                            <input type="hidden" id="todoNum" name="todoNum" value="{{todo.id}}"></input>
+                            <span class="input-group-addon">
+                                <button type="submit" class="custom-btn btn btn-danger">완료</button>
+                            </span>
+                        </div>
+                    </form>
+                    {% endif %}
+                    {% endfor %}
+                </ul>
+            </div>
+```
+
+
+
+파이썬 if문을 작성해서 데이터베이스의 isDone 이 False로 되어 있으면 보이고 True이면 안보이게 만든다.
+
+그리고 form의 action 도 수정한다.
+
+
+다음 urls.py를 수정한다.
+
+
+
+```django
+path('boolTodo/', views.boolTodo, name = 'boolTodo')
+```
+
+
+
+urls를 통해서 view로 갔으니 view에 함수를 작성해준다.
+
+
+
+```django
+def boolTodo(request):
+    done_todo_id = request.GET['todoNum']
+    print('완료한 todo의 id', done_todo_id)
+    todo = Todo.objects.get(id=done_todo_id)
+    todo.isDone = True
+    todo.save()
+    return HttpResponseRedirect(reverse('index'))
+```
+
+
+
+index에 있는 name을 통해서 확인을 눌렀을 시의 해당 데이터를 가져와 변수에 저장한다.
+
+저장한 id를 이용해서 데이터 베이스의 해당 데이터 행에 접근한다.
+
+그리고 isDone을 True로 바꿔주고 데이터베이스를 저장한 이후 다시 redirect를 통해서 
+
+첫 번째 화면으로 돌아간다.
+
+
+
+첫 번째 화면으로 돌아가면 데이터 isDone이 True로 바뀌어져 있는 부분은 display 되지 않는다.
+
+결국 데이터는 삭제되지 않았지만 데이터 정보는 수정이 된 것.
+
+
+
+즉 우리는 웹페이지의 데이터 UPDATE 과정을 살펴본 것.
+
+
+
 
 
