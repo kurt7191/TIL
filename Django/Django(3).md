@@ -32,6 +32,14 @@ conda install django
 #django 기반 프로젝트 생성
 django-admin startproject myproject
 
+#app도 생성
+
+
+
+#책대로 진행!!!!
+
+
+
 #server 실행 -> 서버를 실행
 python manage.py runserver
 
