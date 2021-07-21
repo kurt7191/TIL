@@ -66,9 +66,7 @@ merge
 
 10. git log --oneline -> commit 이름 확인(코드네임)
 
-   
 
-   
 
    ### branch
 
