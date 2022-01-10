@@ -174,3 +174,83 @@ Co-word  network
 
 <hr>
 
+## Methodology
+
+
+
+
+
+1. 전처리
+
+   - HTML TAG, 특수문자 등의 TEXT에서 분석에 불필요한 내용을 지우기.
+
+2. Favourability 수치 계산하기
+
+   - Aspect 를 brand association 으로 정함
+   - 그러나 리뷰의 모든 단어들을 Aspect로 정하지 않음. 왜냐하면, 모든 문서로 정할 경우 상품에 관련된 aspect 가 아니라 브랜드와 관련 없는 단어들이 aspect 가 될 가능성이 있음.
+   - Nice phone with amazing performance. 를 모든 단어로 aspect 취한다면, "Nice", "phone","with", "amazing","performance", 하지만 nice는 phone과의 연관성이고 amzaing 은 performance와의 전체 연관성이다. 소비자들은 상품의 중요한 측면을 분석한다.
+   - 따라서 상품의 aspect 를 brand association 으로 간주하자고 제안한다.다시 말하자면 모든 단어들을 aspect 로 정한는 게 아니라 상품과 관련된 명사 -> aspect들만 brand association 으로 간주.
+   - Vader 방식 사용해서 aspect 를 추출한다.
+   - 그 다음 문장의 구문론적 구조를 사용하는데, 수식어가 붙은 명사를 aspect로 지정한다.
+   - 여기서 우리는 aspect를 추출할 때, double propagation approach 를 사용한다. 여기서 우리가 사용할 규칙은 두 가지.
+     - 만일 opinion word 가 target  word에 형용사나 명사 수식을 하면 target word 는 aspect로 받아진다.
+     - 형용사나 명사수식과 직접적인 관련이 있는 opinion word가 있고 target word가 똑같이 그 단어에 연관 있으면 target word로 채택 (예, The phone has the best camera)
+     - opinion 과 aspects 간의 조합은 감성분석을 하기 위해서 남겨둔다.
+   - 비지도 방식의 vader 기법을 사용하는데, opinion 에 대해서 분석한다. 분석을 한 값은 -1 ~ 1 을 갖고, -1에 가까울수록 부정 1에 가까울수록 긍정이다. 출력된 값들을 opinion과 aspects 쌍에 적용해서 aspect의 감성 수치를 구한다. 이 값들의 평균이 favourability 점수다.
+
+3. Strength 점수 계산하기
+
+   - aspect 차원에서  strength 점수를 계산할거기 때문에 favourability 점수를 구할 때처럼 똑같이 aspect를 추출한다.
+   - co-occurrence matrix 를 만든다. C(i,j), C(i,j) 는 i와 j가 동시에 출현한 빈도를 가진다.
+   - wc(i) 는 i단어가 전체 문서에서 등장한 횟수를 의미한다.
+   - V = corpus 내에서 unique 단어들의 개수를 의미한다.
+   - C(i,j) 를 일반화 해서 NC(i,j) 를 만든다.
+     - NC(i,j) 의 값은 i노드와 j노드의 간선 weight 로 간주된다. 이 값은  0 ~ 1 사이의 값을 가진다.
+     - 근데, 식에 보면 C(i,j) 의 i, j 가 각각 한 번만 출현하면 C(i,j) 의 값은 1이 된다. 둘이 동시 출현한 횟수가 적음에도 높은 수치를 보이기 때문에 패널티를 부여해서 가중치를 평탄화 시키고 모든 V에 C(i,j) 값을 분배한다. 즉 1/V 를 한다.
+     - i단어와 붙어있는 모든 단어들의 NC(i,j) 값을 더하고  노드 n_i 값으로 나누면 S_i 값 즉, Strength 수치가 도출된다.
+
+4. uniqueness 점수 계산하기
+
+   - 다른 제품과 구분되는 특수성을 uniqueness 로 본다. (co-word network 에서)
+
+   - DIL 방법을 사용.
+
+     - local data 사용, neighborhood node, (degree, weight(노드의 중요도를 확인하기 위해서))
+     - 두 단계를 사용
+       1. 간선의 중요도를 계산
+       2. 간선이 붙어있는 노드의 공헌도를 
+     - weight 가 붙어있지 않은 그래프 사용.
+     - 간선의 weight 를 구하는데, 이 weight 는 importance 를 구하는데 사용된다., 이 weight 를 노드의 contribution 으로 정함. 근데 만일 n_i노드가 1번만 나오면 식이 0이 되고, n_i, n_j 둘다 한 번 나오는데 하필 둘이 관계를 맺어도 값이 0 이된다.
+     - 위의 문제를 해결하기 위해서 그냥 노드간 weight 를 contribution 으로 정한다.
+
+     - 이 구해진 N(i,j) , weight 즉, contribution 을 이용해서 그 노드의 중요도를 구한다. 이 값이 바로 uniqueness.
+     - 식은 다시 보고 
+
+     
+
+   - 브랜드 이미지 점수 구하기
+
+     - 
+
+   - ㅇ
+
+   - ㅇ
+
+   - ㅇ
+
+   - ㅇ
+
+   - 
+
+5. 
+
+6. ㅇ
+
+7. 
+
+
+
+
+
+
+
