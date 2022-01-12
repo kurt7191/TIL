@@ -220,7 +220,7 @@ Co-word  network
      - local data 사용, neighborhood node, (degree, weight(노드의 중요도를 확인하기 위해서))
      - 두 단계를 사용
        1. 간선의 중요도를 계산
-       2. 간선이 붙어있는 노드의 공헌도를 
+       2. 공헌도를 계산 
      - weight 가 붙어있지 않은 그래프 사용.
      - 간선의 weight 를 구하는데, 이 weight 는 importance 를 구하는데 사용된다., 이 weight 를 노드의 contribution 으로 정함. 근데 만일 n_i노드가 1번만 나오면 식이 0이 되고, n_i, n_j 둘다 한 번 나오는데 하필 둘이 관계를 맺어도 값이 0 이된다.
      - 위의 문제를 해결하기 위해서 그냥 노드간 weight 를 contribution 으로 정한다.
@@ -242,11 +242,16 @@ Co-word  network
 
 
 1. Description of the dataset
+
    - Samsung, Coolpad, Lenovo, Motorola and Huawei from Amazon 핸드폰 리뷰 사용
    - 1월부터 오월까지 데이터 사용
    - 이 데이터들 내에서 3~4개 이상의 문장들로 구성된 리뷰들만 채택 
    - Standard 한 Preprocessing 과정을 거침
+
 2. Computing favorability, strength, and uniqueness scores
+
+   - 앞서 설명한 방식으로 favourability, strength and uniqueness scores 구한다.
+
    - 먼저 단일 명사든 복수 명사든 모두 잠재적인 aspect로 간주한다.
    - double propagation 알고리즘(두 개의 규칙을 사용한) 으로 구문론적 방법을 사용해서 opinion - aspect pair 들을 생성한다.
    - 이 opinion - aspect 쌍으로 각 aspect 에 대한 positive , negative 를 추출하는데, 값이 0 에 가까울수록 negative, 1에 가까울수록 positive 로 배정한다. 그래서 aspect에 대한 감정 값을 평균내면 그게 "Favourability" (먼저 Favourability 구했음)
@@ -257,10 +262,14 @@ Co-word  network
    - 앞서 구한 NC(i, j)는 단어의 importance를 구하는데 사용됨. NC(i,j)의 contribution 을 계산하는 식은 논문에 나와있는 식과 같은데, 만일 단어가 1번만 나온다거나, 두 단어가 한번 나온게 co-occurence를 한 경우에는 그냥 NC(i,j) 를 contribution 으로 간주한다.
    - 이와 같은 방식으로 i와 붙어있는 모든 노드들의 집합 j에 대해서, contribution을 계산하고 모두 더한 후, i단어 노드의 degree 를 일반화한 값을 더해준다. 이 값이 바로 "Uniqueness" 값
    - association network 에 포함된 aspect 들은 모두  "favourability" 값을 구할 때 승인된 aspect들 뿐.
+
 3. Comparision based on brand imagpe attributes
+
    - 월별로 favourability, strength, uniqueness 를 속성으로 두고 scatter 를 찍으면 각 브랜드들을 시간대별로 performance를 비교할 수 있다.
    - 그리고 그래프로 scatter 를 확인할 수 있지만, 각 속성별로 표를 만들어서 그것대로 비교해도 유의미하다.
+
 4. Calculation of OBIM score
+
    - OBIM SCORE 로 브랜드를 비교하면 편리하다.
 
 
@@ -291,9 +300,9 @@ OBIM SCORE 는 브랜드의 강점 약점,을 친민감, 강점, 독특함 연�
 
 2. Senti-Concept Mapper : A technique to analyze the sentiment of hidden concepts
 
-   - Senti-Concept Mapper 는 구조화된 컨셉을 brand association 들의 연결로 본다.
+   - Senti-Concept Mapper 는 구조화된 Concept을 brand association 들의 연결로 본다.
    - Senti-Concept Mapper는 숨겨진 concept 을 발견하거나, 이미 드러난 concept 의 감정 수치를 계산한다.
-   - 컨셉의 감정이 시간이 변화감에 따라서 어떻게 변화는지 분석할 수 있게 해준다.
+   - Concept의 감정이 시간이 변화감에 따라서 어떻게 변화는지 분석할 수 있게 해준다.
    - Concept identification
      1. Camera의 performance 를 중심으로 개념을 채굴하는데 "resolution","performance","battery" 를 고려해서 채굴할 수 있다.
      2. concept 에 새로운 association 을 집어 넣는데 제약이 없다. association "resolution" 은 새로운 연상인 "screen" 을 추가할 수 있다.
@@ -309,7 +318,10 @@ OBIM SCORE 는 브랜드의 강점 약점,을 친민감, 강점, 독특함 연�
 
 
 1. 한계
-   - 지금 현재 product review 에 대해서만 obim score를 적용했는데, online review 에 대해서 적용을 하면 obim score 가 수정될 수 있을 것이다.
+   - 현재 product review 에 대해서만 obim score를 적용했는데, online review 에 대해서 적용을 하면 obim score 가 더 좋게 수정될 수 있을 것.
    - 수동적인 swot분석과 senti concept mapper 방식인데, 나중에 자동화된 모델이 나올 수 있다.
-   - 만일 문장에 감정에 영향을 주는 외부적 요소가 들어간다면, obim score 에 영향을 줄 수 있다.(단어사전대로가 아니라.)
-   - 마지막으로, 소비자 관점들은 마켓팅과 같은 프로모션에 의해서 편향되어질 수 있는데, 그러한 편향을 잡는게 모델의 발전을 이루어낼 수 있다.
+   - 만일 문장에 감정에 영향을 주는 외부적 요소가 들어간다면, obim score 에 영향을 줄 수 있다.(사회적, 정치적, 경제적 요소 등등)
+   - 마지막으로, 소비자 관점들은 프로모션과 광고 같은 마켓팅 노력에 의해서 편향되어질 수 있는데, 그러한 편향을 잡는게 모델의 발전을 이루어낼 수 있다.
+
+
+
