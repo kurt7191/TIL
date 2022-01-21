@@ -112,16 +112,16 @@ CNN, LSTM, RNN, CNN - LSTM 을 이용해서
 
 
 
-- 사용 데이터
-  1. Twitter product reviews corpus
-     - 93,000 개 영어 트윗.
-     - 상품과 관련된 것.
-     - 각각의 트윗에 감정 상태 labeling.
-       - 4명의 전문가가 직접 기록
-       - Fleiss's kappa (k) metric을 계산했더니 0.81 k, 괜찮다고 판단.
-     - 최종적으로 긍정 데이터 43,000개, 부정 데이터 43,000개를 얻었다.
-  2. Target dependent twitter corpus
-     - 훈련 데이터 6,248개, 테스트 데이터 692개
+1. Twitter product reviews corpus
+   - 93,000 개 영어 트윗.
+   - 상품과 관련된 것.
+   - 각각의 트윗에 감정 상태 labeling.
+   - 4명의 전문가가 직접 기록
+     - Fleiss's kappa (k) metric을 계산했더니 0.81 k, 괜찮다고 판단.
+   - 최종적으로 긍정 데이터 43,000개, 부정 데이터 43,000개를 얻었다.
+
+1. Target dependent twitter corpus
+   - 훈련 데이터 6,248개, 테스트 데이터 692개
 
 
 
@@ -129,44 +129,47 @@ CNN, LSTM, RNN, CNN - LSTM 을 이용해서
 
 
 
-neural language model은 단어의 의미론적 특색을 담은 vector 를 준다.
+- Embedding
 
-우리는 5개의 embedding 방식을 살펴볼건데 아래와 같다.
+  1. word2vec 
+
+     - input layer, hidden layer, output layer
+
+     - CBOW :  맥락 단어들을 Input으로 넣어서 target 단어들을 예측.
+     - SG(SKIP-GRAM) : 반대로 target 단어로부터 맥락 단어를 예측.
+     - 추론을 잘하는 신경망을 학습을 통해서 만들고, 입력 가중치 매개변수의 행을 각 단어의 분산 표현으로 지정하고 벡터로 선정한다.
+
+  2. GloVe 
+
+     - 동시 발생 행렬과, 동시 발생 확률을 구함.
+     - 임베딩된 중심단어와 주변 단어의 내적이 두 단어의 동시 단어 발생 확률이 되게끔 만든다.
+     - 동시 밸생 행렬이 희소 문제를 해결하기 위해서 단어의 빈도수에 가중치 부여
+       -  문서 내에서 가깝게 출현한 단어들이나 동시 발생 확률이 높은 단어들은 더 중요한 단어로 간주.
+
+  3. fastText
+
+     - word2vec 응용.
+     - 비슷한 구조를 가지고 있는 단어들에 대해서 각각 다른 벡터를 출력하던 타 모델과 달리 비슷한 벡터를 출력.
+     - 철자 단위 정보 n-gram 활용
+       1. n-gram을 length(n) 을 각기 달리하여 각각의 character n-gram 을 만든다 => "<", ">"  사용.
+       2. n-gram 내부에 단어들이 존재할텐데, 이 단어들을 word2vec 으로 변환하고 이 벡터들의 총합을 구한다.
+       3. 그 벡터 값이 바로 단어의 벡터 표현.
+
+  4. LDA2vec
+
+     - word2vec 과 LDA 기반의 임베딩 기술.
+     - 텍스트들의 집합에 대해서 주제를 밝히고 word vector 들은 주제에 따라서 조절.
+
+  5. Doc2vec
+
+     - word2vec 응용
+     - 문장이나 문서 전체에 대한 vector 를 얻어보자는 아이디어에서 나온 기술.
+     -  word2vec 의 원리와 비슷하지만 word2vec 에 사용되는 입력값에 문장ID를 입력값으로 추가한다.
+       1. 모든 문장에 ID를 부여해서, 문장ID를 얻는다.
+       2. 이를 똑같이 벡터화 해서 input 값으로 넣는다.
+       3. 문장의 모든 맥락 단어들이 학습에 전부 사용될 때까지 똑같은 문장ID 벡터를 입력값으로 넣어주면서, 문장ID 벡터를 수정한다.
 
 
-
-- embedding skill : word2vec, fastText, Glove, LDA2vec, and DOC2vec
-
-
-
-1. word2vec : input layer, hidden layer, output layer 로 이루어져 있다.
-
-   - 두 가지 방식으로 나뉜다.
-     - CBOW :  맥락 단어들을 Input으로 넣어서 target 단어들을 예측하는 방식을 사용한다.
-     - SG(SKIP-GRAM) : 반대로 target 단어로부터 맥락단어를 추론하는 방식을 사용한다.
-   - 추론을 잘하는 신경망을 학습을 통해서 만들고, 그 때 입력 가중치 매개변수의 행을 각 단어의 분산 표현으로 지정하고 벡터로 선정한다.
-
-2. GloVe : 동시발생 행렬을 만드는데, 동시 발생 확률도 구한다. 이 임베딩의 큰 아이디어는 임베딩된 중심 단어와 주변 단어 벡터의 내적이 두 단어의 동시발생 확률이 되게끔 만드는 것이다. 동시 발생 확률은 손실함수 계산에 사용된다. 학습 과정에서 GloVe 는 동시 발생 행렬의 희소 문제를 해결하기 위해 단어의 빈도수에 가중치를 주게 되는데, 이때 문서 내에서 가깝게 출현한 단어들이나 동시 발생 확률이 높은 단어들은 더 중요한 단어로 간주된다.
-
-   
-
-3. fastText : 기존 embedding 모델들은 비슷한 구조를 가지고 있는 단어들에 대해서 각각 다른 벡터를 출력했다. 근데, 단어의 형태가 일정한 룰을 따르고 있으니 철자 단위 정보, n-gram을 활용해서 더 좋은 단어 표현을 만들려고 했다.
-
-   - n-gram을 length(n) 을 각기 달리하여 각각의 character n-gram 을 만든다 => "<", ">" 있는거,
-   - n-gram 내부에 단어들이 존재할텐데, 이 단어들을 word2vec 으로 변환하고 이 벡터들의 총합을 구한다.
-   - 그 벡터 값이 바로 단어의 벡터 표현.
-
-4. LDA2vec : word2vec 과 LDA기반의 임베딩 기술. 텍스트들의 집합에 대해서 주제를 밝히고 word vector 들은 주제에 따라서 조절된다.
-
-5. Doc2vec : word2vec 을 이용해서 문장이나 문서 전체에 대한 vector 를 얻어보자는 아이디어에서 나온 embedding 기술. word2vec 의 원리와 비슷하지만 word2vec 에 사용되는 입력값에 문장ID를 추가해서 개선한다.
-
-   - 모든 문장에 ID를 부여해서, 문장ID를 얻는다.
-
-   - 이를 똑같이 벡터화 해서 input 값으로 넣는다. 그 문장의 모든 맥락 단어들을 전부 사용할 때까지 똑같은 문장id 를 입력값으로 넣어주면서, 문장 id 벡터를 수정한다.
-
-     
-
-   
 
 ### Weighting funcitions
 
@@ -176,30 +179,29 @@ neural language model은 단어의 의미론적 특색을 담은 vector 를 준�
 
 
 
-1. IDF : 
+1. IDF
 
    - 전체 문서의 수 / i단어를 포함하는 문서의 수이다. 
    - 해당 단어가 문서에 드물게 나올수록 값이 커진다. 
    - IDF 값이 커질수록 해당 단어가 중요한 단어임을 의미한다.
 
-2. TF: 
+2. TF
 
    - 이 문서에 해당 단어가 등장한 횟수 / 문서내의 전체 단어 수
    - 단어가 얼마나 자주 등장하는지를 드러내는 수치.
 
-3. TF - IDF : 
+3. TF - IDF
 
    - 문서에 많이 나온 단어 + 전체 문서에서 얼마나 희귀하게 나왔는지 같이 고려하는 방법
 
    - tf * idf
 
-     
+4. SIF
 
-4. SIF :  식은 `a / a + tf_ic`
+   - `a / a + tf_ic`
 
-a = 10^-4 로 나타냄.
-
-만일 tf_ic 즉, 해당 단어가 출현한 빈도가 많아지면 가중치 값은 낮아지고 출현 빈도가 낮으면 가중치 값은 높아진다.
+   - a = 10^-4 로 나타냄.
+   - tf_ic 커지면 가중치 값은 낮아지고 낮으면 가중치 값은 높아진다.
 
 
 
@@ -207,9 +209,13 @@ a = 10^-4 로 나타냄.
 
 
 
-1. The weighted sum : 우리가 알고 있는 가중합 방식
-2. center-based aggreagtion :
-3. Delta rule : 드물게 출현하는 단어는 제거
+1. The weighted sum
+   - 기본적인 방식.
+2. center-based aggregation
+   - 텍스트 문서의 중심 포인트가 계산
+   - 다른 문서들에도 적용
+3. Delta rule
+   - 드물게 출현하는 단어는 제거
 
 
 
@@ -255,7 +261,7 @@ a = 10^-4 로 나타냄.
 
 1. CNN-LSTM
 
-   - 구조 : weighted embedding layer - 
+   - 구조
 
      1. weighted embedding layer
         - TF-IDF, GloVe, center-based aggregation 이 성능 제일 좋게 나와서 weighted embedding layer 에 이 방법 사용.
@@ -329,29 +335,25 @@ conventional neural language 모델과 CNN+LSTM 모델이 있음.
 
 
 
-table1 result
-
-1. conv 모델에서는 lstm 근데 cnn+lstm 이 훨씬 좋음 (weight 안준 순수 embedding 때)
-2. unweighted embedding 기술 중에선 GloVe가 성능이 제일 좋았음.
-3. sentence padding 이 들어간게 unweighted embedding 보다 더 성능이 좋았다. 근데 weighted 된거랑 비교하면 안좋다.
-
-
-
-table2 result
-
-1. weight function, vector aggregation function, architecture 고려됐다.
-2. 결과를 요약한 그래프가 있다.
-   - tf-idf 가 제일 우수
-   - center based aggregation 가 제일 우수
-   - GloVe 가 제일 우수
+1. table1 result
+   - conv 모델에서는 lstm 근데 cnn+lstm 이 훨씬 좋음 (weight 안준 순수 embedding 때)
+   - unweighted embedding 기술 중에선 GloVe가 성능이 제일 좋았음.
+   - sentence padding 이 들어간게 unweighted embedding 보다 더 성능이 좋았다. 근데 weighted 된거랑 비교하면 안좋다.
 
 
 
-table3 result
+2. table2 result
+   - weight function, vector aggregation function, architecture 고려됐다.
+   - 결과를 요약한 그래프가 있다.
+     - tf-idf 가 제일 우수.
+     - center based aggregation 가 제일 우수.
+     - GloVe 가 제일 우수.
 
-target dependent Twitter corpus
 
-table2 가 고려했던 것 그대로 고려해서 실험해봤는데, 똑같은 패턴의 결과가 나왔다.
+
+3. table3 result
+   - target dependent Twitter corpus.
+   - table2 와 똑같은 패턴의 결과.
 
 
 
