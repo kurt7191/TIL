@@ -44,8 +44,6 @@ CNN-LSTM 의 층은 5개의 층이다.
 
 
 
-
-
 감성 분석은 개인이나 조직에 이익을 가져다주게 사용될 수 있다.
 
 감성 분석의 방식은 두 가지로 구분이 된다.
@@ -166,8 +164,6 @@ neural language model은 단어의 의미론적 특색을 담은 vector 를 준�
 
 
 
-
-
 1. word2vec : input layer, hidden layer, output layer 로 이루어져 있다.
 
    - 두 가지 방식으로 나뉜다.
@@ -175,7 +171,9 @@ neural language model은 단어의 의미론적 특색을 담은 vector 를 준�
      - SG(SKIP-GRAM) : 반대로 target 단어로부터 맥락단어를 추론하는 방식을 사용한다.
    - 추론을 잘하는 신경망을 학습을 통해서 만들고, 그 때 입력 가중치 매개변수의 행을 각 단어의 분산 표현으로 지정하고 벡터로 선정한다.
 
-2. GloVe :
+2. GloVe : 동시발생 행렬을 만드는데, 동시 발생 확률도 구한다. 이 임베딩의 큰 아이디어는 임베딩된 중심 단어와 주변 단어 벡터의 내적이 두 단어의 동시발생 확률이 되게끔 만드는 것이다. 동시 발생 확률은 손실함수 계산에 사용된다. 학습 과정에서 GloVe 는 동시 발생 행렬의 희소 문제를 해결하기 위해 단어의 빈도수에 가중치를 주게 되는데, 이때 문서 내에서 가깝게 출현한 단어들이나 동시 발생 확률이 높은 단어들은 더 중요한 단어로 간주된다.
+
+   
 
 3. fastText : 기존 embedding 모델들은 비슷한 구조를 가지고 있는 단어들에 대해서 각각 다른 벡터를 출력했다. 근데, 단어의 형태가 일정한 룰을 따르고 있으니 철자 단위 정보, n-gram을 활용해서 더 좋은 단어 표현을 만들려고 했다.
 
@@ -183,7 +181,7 @@ neural language model은 단어의 의미론적 특색을 담은 vector 를 준�
    - n-gram 내부에 단어들이 존재할텐데, 이 단어들을 word2vec 으로 변환하고 이 벡터들의 총합을 구한다.
    - 그 벡터 값이 바로 단어의 벡터 표현.
 
-4. LDA2vec :
+4. LDA2vec : word2vec 과 LDA기반의 임베딩 기술. 텍스트들의 집합에 대해서 주제를 밝히고 word vector 들은 주제에 따라서 조절된다.
 
 5. Doc2vec : word2vec 을 이용해서 문장이나 문서 전체에 대한 vector 를 얻어보자는 아이디어에서 나온 embedding 기술. word2vec 의 원리와 비슷하지만 word2vec 에 사용되는 입력값에 문장ID를 추가해서 개선한다.
 
@@ -194,8 +192,6 @@ neural language model은 단어의 의미론적 특색을 담은 vector 를 준�
      
 
    
-
-
 
 ### Weighting funcitions
 
@@ -224,7 +220,7 @@ neural language model은 단어의 의미론적 특색을 담은 vector 를 준�
 
      
 
-4. SIF :
+4. SIF :  식은 `a / a + tf_ic`
 
 
 
@@ -232,9 +228,9 @@ neural language model은 단어의 의미론적 특색을 담은 vector 를 준�
 
 
 
-1. The weighted sum :
+1. The weighted sum : 우리가 알고 있는 가중합 방식
 2. center-based aggreagtion :
-3. Delta rule :
+3. Delta rule : 드물게 출현하는 단어는 제거
 
 
 
@@ -305,7 +301,7 @@ neural language model은 단어의 의미론적 특색을 담은 vector 를 준�
 
    - 특징을 추출하기 위해서 합성곱 연산을 진행한다.
 
-   - convolution layer 의 필터가 matrix 의 행방향으로 진행된다.
+   - convolution layer 의 필터가 matrix 의 수직방향으로 진행된다.
 
    - 필터의 넓이는 word embedding width 와 같다.
 
@@ -367,15 +363,43 @@ table2 result
 1. weight function, vector aggregation function, architecture 고려됐다.
 2. 결과를 요약한 그래프가 있다.
    - tf-idf 가 제일 우수
-   - center based aggregation 이 그 다음 우수
-   - 
-3. ㅇ
-4. ㅇ
-5. 
+   - center based aggregation 가 제일 우수
+   - GloVe 가 제일 우수
 
 
 
+table3 result
 
+target dependent Twitter corpus
+
+table2 가 고려했던 것 그대로 고려해서 실험해봤는데, 똑같은 패턴의 결과가 나왔다.
+
+
+
+##### 최종 인사이트
+
+
+
+1. word embedding 에 weighted 한게 unweighted embedding 보다 더 성능이 좋다.
+2. GloVe가 성능이 제일 좋은데, 이는 통계적인 정보도 GloVe이 담고 있기 때문이다.
+3. TF-IDF 가 Weighted function 중에 제일 좋다.
+4. center-based aggregation 이 제일 성능이 좋은 집계 함수다.
+5. padding 을 한 word embedding 이 unweigthed embedding 보다 더 좋다. 하지만 weighted word embedding 이 제일 좋다.
+6. 아키텍쳐 중에서 전통적인 모델보다 CNN + LSTM 모델이 제일 좋다.
+7. 드롭아웃사용
+8. 두 개의 데이터를 제안한 모델의 성능평가를 하기 위해서 사용했는데, 데이터가 다르면 어떻게 될지 모른다. 따라서 가장 최적의 결과만을 내놓는 하나의 접근법만 있는 게 아니다.
+
+
+
+## Conclusion
+
+
+
+감성 분석에서, unweighted word embedding 보다 weighted embedding 이 성능이 제일 좋았고,
+
+전통적인 방식보다 CNN + LSTM 방식이 더 성능이 좋았으니
+
+weighted word embedding CNN LSTM 방식을 사용해야 한다. (분류 정확도 성능이 93.95% 까지 나왔다.)
 
 
 
