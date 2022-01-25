@@ -1,44 +1,25 @@
-### Now studying (~1.28)
+### Now studying (~2.28)
 
-1. 딥러닝
-   - 딥러닝 기초 이론
 2. NLP
-   - 기초 Embedding word2vec 이론
-   - RNN, LSTM, Attention 이론
-   - "텐서플로2와 머신러닝으로 시작하는 자연어처리" 로 nlp 실습
-
-
+   - "텐서플로2와 머신러닝으로 시작하는 자연어처리" 로 NLP 실습
+   
+   - (Attetion, 트랜스포머), BERT, GPT-1,GPT-2
+   
+   - LDA
+   
+   - 캐글 데이터 실습(미정)
+   
+     
 
 ### Reference
 
 
 
-- 딥러닝
-  - 모두의 딥러닝
-  - 밑바닥부터 시작하는 딥러닝
 - NLP
-  - 밑바닥부터 시작하는 딥러닝2
   - 텐서플로2와 머신러닝으로 시작하는 자연어처리
-  - 감성분석 관련 논문
-    - OBIM_A computational model to estimate brand image from online consumer review
-    - Sentiment analysis on product reviews based on weighted word embeddings and deep neural networks
-
-
-
-### Next study plan(2.3 ~)
-
-
-
-1. NLP
-   - Attention
-     - Attention is all you need 논문 읽기 및 review(pdf)
-   - BERT
-     - 구글 BERT의 정석 책
-     - 구글 BERT 논문 읽기 및 review
-   - Embedding
-     - GloVe 논문 읽기 및 review(pdf)
-   - Topic modeling
-     - LDA 공부, 방식은 미정
-2. 실습
-   - Kaggle 데이터 실습 (구체적인건 미정)
-
+  - Attention is all you need(논문), 자연어처리를 위한 트랜스포머(교재)
+  - BERT: Pre-training of Deep Bidirectional Transformers for Language(NAACL2019)(논문),구글 BERT의 정석(교재)
+  - GPT-1, Improving Language Understanding by Generative Pre-Training paper review(논문)
+  - GPT-2, Language Models are Unsupervised Multitask Learners paper review(논문)
+  - LDA 참고 자료 미정
+  - 캐글(미정)
