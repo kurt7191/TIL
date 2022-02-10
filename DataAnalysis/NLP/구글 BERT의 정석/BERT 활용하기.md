@@ -52,7 +52,7 @@
 
 문장이 있으면 토큰 단위로 나누고, 그 값들을 BERT의 입력값으로 넣어 토큰 단위 표현 벡터인 임베딩을 얻는다.
 
-이때 토큰 수준에서 임베딩을 얻는 것 뿐만 아니라 문장 수준의 임베딩도 얻을 수 있다.
+이때 토큰 수준에서 임베딩을 얻는 것뿐만 아니라 문장 수준의 임베딩도 얻을 수 있다.
 
 이 장에서 토큰 수준 및 문장 수준 임베딩을 얻는 법을 살펴보자.
 
@@ -404,6 +404,218 @@ last_hidden_state, pooler_output, hidden_states = model(token_ids,
 
 
 
+근데 여기서 error 가 발생한다. output_hidden_state = True 로 설정했지만, 이게 업데이트 돼서 인코딩의 모든 레이어에서 나오는 표현 벡터를 못얻고 있다. 다음에 한 번 오류를 수정해보자.
 
 
-근데 여기서 error 가 발생한다. output_hidden_state = True 로 설정했지만, 이게 업데이트 돼서 인코딩의 모든 레이어에서 나오는 표현 벡터를 못얻고 있다. 다음에.
+
+<hr>
+
+## 다운 스트림 태스크를 위한 BERT 파인 튜닝 방법
+
+
+
+지금까지 사전 학습된 BERT모델을 사용하는 방법을 배웠다.
+
+사전 학습된 모델을 다운스트림 태스크에 맞춰서 파인 튜닝 하는 방법을 배워볼 것.
+
+
+
+- 텍스트 분류
+- 자연어 추론(NLI)
+- 개체명 인식(NER)
+- 질문 - 응답
+
+
+
+### 텍스트 분류
+
+
+
+사전 학습된 BERT 모델을 텍스트 분류 태스크에 맞춰 파인 튜닝하는 방법.
+
+
+
+먼저 데이터 셋을 가정해보자.
+
+각각의 문장에 대해서 긍정의 감정인지 혹은 부정의 감정인지에 대한 데이터 셋이 있다고 가정해보자.
+
+그 데이터 셋에 "I love Paris" 가 있다고 가정해보자.
+
+I love Paris 를 토큰화하고 전처리 과정을 거친다. 시작 부분에는 "[cls]" 를 추가하고, 문장의 끝에는 "[sep]" 를 추가한다.
+
+그리고 사전 학습된 BERT 에 전처리된 문장을 집어 넣어서 모든 토큰의 벡터 표현을 얻는다.
+
+
+
+다음으로 모든 토큰의 임베딩을 무시하고 R_cls 인 [cls] 토큰의 임베딩만 취한다.
+
+cls토큰 임베딩을 분류기(소프트맥스 함수가 있는 피드포워드 네트워크)에 입력하고 학습시켜 감정 분석을 수행한다.
+
+
+
+그렇다면 주목해야할 점이 있는데
+
+사전 학습된 BERT 모델을 파인 튜닝하는 게, 사전 학습된 BERT를 특징 추출기로 사용하는 것은 어떻게 다른가?
+
+사전 학습된 BERT 모델을 **파인 튜닝**하면  **분류기 가중치와 함께 사전 학습된 BERT 모델의 가중치를 업데이트** 하는 것.
+
+반면 사전 학습된 BERT 모델을 특징 추출기로만 사용하면, 사전 학습된 BERT 모델의 가중치는 업데이트하지 않고, 분류기의 가중치만 업데이트 하게 된다.
+
+
+
+그럼 정리해서 감정 분석 태스크를 위해서 사전 학습된 BERT 모델을 파인 튜닝하는 과정을 살펴보자.
+
+먼저 입력 문장을 전처리 해서 "CLS, I, love, Paris, SEP" 와 같은 형식으로 입력값을 만든다.
+
+이 입력값을 사전 학습된 BERT 모델에 집어 넣어서 각 토큰에 관한 표현 벡터, 임베딩을 얻는다.
+
+이때 r_cls 임베딩만 참고해서 softmax 함수를 이용해 피드 포워드 네트워크에 집어 넣는다.
+
+이 값을 참고해서 긍정과 부정을 분류한다.
+
+
+
+##### 감정 분석을 위한 BERT 파인 튜닝
+
+
+
+IMDB 데이터 셋을 사용할건데, IMBD 데이터 셋은 영화 리뷰와 그 리뷰에 관한 감정 레이블을 가진다.
+
+
+
+```python
+%%capture
+!pip install nlp==0.4.0
+!pip install transformers==3.5.1
+```
+
+
+
+```python
+from transformers import BertForSequenceClassification, BertTokenizerFast, Trainer, TrainingArguments
+from nlp import load_dataset
+import torch
+import numpy as np
+
+
+#데이터셋과 모델 불러오기
+
+!gdown https://drive.google.com/uc?id=11_M4ootuT7I1G0RlihcC0cA3Elqotlc-
+dataset = load_dataset('csv', data_files='./imdbs.csv', split='train')
+
+dataset = dataset.train_test_split(test_size=0.3)
+
+train_set = dataset['train']
+test_set = dataset['test']
+
+model = BertForSequenceClassification.from_pretrained('bert-base-uncased')
+
+tokenizer = BertTokenizerFast.from_pretrained('bert-base-uncased')
+
+#데이터셋 전처리
+
+tokenizer('I love Paris')
+tokenizer(['I love Paris', 'birds fly','snow fall'], padding = True, max_length=5)
+
+def preprocess(data):
+    return tokenizer(data['text'], padding=True, truncation=True)
+
+train_set.set_format('torch', columns=['input_ids', 'attention_mask', 'label'])
+test_set.set_format('torch', columns=['input_ids', 'attention_mask', 'label'])
+
+#모델 학습
+batch_size = 8
+epochs = 2
+
+warmup_steps = 500
+weight_decay = 0.01
+
+
+training_args = TrainingArguments(
+    output_dir='./results',
+    num_train_epochs=epochs,
+    per_device_train_batch_size=batch_size,
+    per_device_eval_batch_size=batch_size,
+    warmup_steps=warmup_steps,
+    weight_decay=weight_decay,
+    evaluate_during_training=True,
+    logging_dir='./logs',
+)
+
+
+trainer = Trainer(
+    model=model,
+    args=training_args,
+    train_dataset=train_set,
+    eval_dataset=test_set
+)
+
+
+trainer.train()
+trainer.evaluate()
+```
+
+
+
+### 자연어 추론
+
+
+
+자연어 추론 (NLI) 모델은 가정이 주어진 전제에 참인지 거짓인지 중립인지 여부를 결정하는 태스크.
+
+BERT 를 파인 튜닝해서 NLI를 수행하는 방법을 알아보자.
+
+
+
+데이터셋은 전제에 해당하는 문장과 가설에 해당하는 문장이 있고 이에 대한 (참, 거짓, 중립) 레이블이 존재한다.
+
+우리가 만들려고 하는 모델의 목적은 전제와 가설 문장의 쌍에 관해서 참,거짓,중립 여부를 결정하는 것이다.
+
+
+
+1)두 문장을 token화 시킨다. 그리고 문장의 시작엔 cls를 넣고 문장 중간 중간에는 sep 을 넣는다.
+
+2)데이터를 사전 학습된 BERT 에 넣어서 각 토큰 마다의 임베딩 값을 얻는다.
+
+3)문장 전체에 대한 임베딩 정보값은 cls 토큰 임베딩값에 들어가 있다. 따라서 r_cls 임베딩값을 분류기에 입력해서 참, 거짓, 중립일 확률을 반환한다.
+
+4)학습 초기에는 결과가 좋지 않지만 학습할수록 결과가 좋아진다.
+
+
+
+### 질문 - 응답
+
+
+
+question-answering task 에서는 질문에 대한 응답이 포함된 단락과 함께 질문이 제공된다.
+
+태스크의 주 업무는 주어진 질문에 대한 단락에서 답을 추출하는 것이다.
+
+
+
+그러니까 질문 문장이 한 개 있고, 단락 문장이 하나 있는데, 이 단락 글의 내용 안에는 질문의 응답에 관한 내용이 포함되어 있다.
+
+우리 모델을 질문에 대한 응답을 단락의 내용 안에서 찾아서 출력해야 한다.
+
+이 과정을 수행하기 위해서 우리 모델은 주어진 단락의 답을 포함하는 텍스트 범위의 시작과 끝의 인덱스를 이해해야 한다. 시작 인덱스부터 끝 인덱스가 질문에 대한 응답일 것이다.
+
+
+
+단락 내의 시작 인덱스와 끝 인덱스를 알기 위해서 시작 벡터 S와 끝 벡터 E라는 2개의 벡터를 사용한다.(이 두 벡터는 학습이 되는 값.)
+
+각각의 문장 내의 토큰 임베딩과 시작 벡터S와의 내적을 구하고, 그 값을 소프트맥스 함수에 집어 넣는다.
+
+그리고 시작이될 확률이 가장 큰 토큰을 시작 토큰으로 선택한다.
+
+끝 인덱스 선정도 마찬가지다.
+
+
+
+
+
+
+
+
+
+
+
