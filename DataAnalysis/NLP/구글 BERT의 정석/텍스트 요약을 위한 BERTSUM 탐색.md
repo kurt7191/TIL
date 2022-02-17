@@ -87,7 +87,7 @@
 
 1. 먼저 입력 문장을 토큰화 한다.
 2. 첫 번째 문장의 시작에 cls 토큰을 추가하고 문장이 끝날 때마다 sep 토큰을 추가한다.
-   - [cls, Paris, is, a, beautiful, city,sep, I, love, paris]
+   - [cls, Paris, is, a, beautiful, city,sep, I, love, paris,sep]
 3. 토큰 임베딩, 세그먼트 임베딩, 위치 임베딩에 각각 넣어주고 3개의 임베딩 형태를 얻는다.
 4. 이 세가지 임베딩 값을 더해주고 BERT 에 입력한다.
    - 이 세 가지 임베딩 값을 입력값으로 받은 BERT는 모든 토큰의 표현 벡터를 출력한다.
@@ -114,7 +114,7 @@ BERT는 모든 토큰의 표현을 얻는다는 것을 우리는 알고 있다.
 
    나머지 문장이 끝날 때마다 sep 을 넣어주는건 동일하다.
 
-   본래는 [cls, Paris, is, a, beautiful, city,sep, I, love, paris] 였지만, [cls, Paris, is, a, beautiful, city,sep, cls,I, love, paris, sep] 로 바꿀 수 있다.
+   본래는 [cls, Paris, is, a, beautiful, city,sep, I, love, paris,sep] 였지만, [cls, Paris, is, a, beautiful, city,sep, cls,I, love, paris, sep] 로 바꿀 수 있다.
 
 2. 입력 토큰을 토큰, 세그먼트, 위치 임베딩 레이어에 입력하고 입력 토큰을 임베딩 형태로 변환한다.
 
