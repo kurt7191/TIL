@@ -392,6 +392,24 @@ Self attention 과 다르게 rnn 은 순차 작업이 필요하다.
 
 이래서 Attention 을 사용한다.
 
+## 
+
+## Traning
+
+
+
+
+
+사용 데이터 셋1 : WMT 2014 English-German dataset, 4.5m 개 sentence pair, tokenizer vocab : 37000 token
+
+사용 데이터 셋2 : WMT 2014 English-French dataset, 37m 개 sentence pari, tokenizer vocab : 32000
+
+
+
+Optimizer : learning rate 를 고정적으로 사용하는 게 아니라 초반 warm up step 은 크게 나중에는 적게 준다.
+
+
+
 
 
 
