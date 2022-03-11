@@ -138,8 +138,6 @@ mlm을 사용한 왼쪽 오른쪽 문맥 추출 작업 이외에도 bert는 next
 
 
 
-
-
 ##### Previous work
 
 
@@ -291,14 +289,67 @@ SemEval2016 task 의 목적은 소비자 리뷰들에서 토픽에 관한 특정
 
 - Aspect category classification
   - 이 task 의 목적은 토픽과 aspect 쌍을 발견하는 것이며 의견이 텍스트 내에서 표현된다.
-  - 
-  - 
+  - 토픽과 aspect는 이미 정의된 토픽 유형 set와 영역당 기준에서 선택해야 한다.
 - Opinion target expression(OTE)
+  - 각각의 entity-aspect 쌍에 대해서 리뷰된 entity를 참조하는 text input에서 사용된 언어적 표현을 추출하는 task 다. (리뷰된 entity가 반영된 text input?)
+  - OTE는 시퀀스에서 하나의 시작 및 종료 오프셋으로 정의된다.
+  - 만일 어떠한 entity도 명료하게 언급되지 않았다면, 그 값은 null 을 반환한다.
 - Sentiment polarity classification
+  - 각각의 식별된 토픽 그리고 aspect 쌍에 대해서 감성의 극단을 예측하는게 목적이다.
+  - 감성의 극단의 값은 positive, negative, neutral, conflict 가 있다.
 - Subtask 1 : Sentence Level
+  - input은 보통 전체 텍스트 수준 텍스트에서 얻은 한 문장으로 구성됩니다.
 - Subtask 2 : Text Level
+  - input 은 몇몇의 aspects 들이 동시에 언급된 전체 리뷰가 사용된다. 
+  - 똑같은 aspects에 대한 다른 의견들이 주어질 수 있다.
 
-<hr>
+
+
+## ABSA without BERT
+
+SemEval2016  에서 최고의 성능을 자랑했던 머신러닝 기술들은 서포트 벡터 머신이나 조건적인 랜덤 분류기들이다. 
+
+비록 딥러닝 모델들이 감성 분석에서 좋은 성능을 보일지라도, 딥러닝을 사용한 기술들은 별로 사용되지 않았다.
+
+
+
+svm 을 사용한 특징들은 보통 **GloVe를 통해서 추출된 문맥화된 단어 표현들** 또는 **데이터 셋으로부터 추출된 명사나 형용사**에 의해서 산출된 단어 리스트들이다.
+
+
+
+## ABSA with BERT
+
+
+
+지금까지는 absa 작업들 중 bert를 사용하지 않은 작업들을 살펴봤다.
+
+이제 bert를 사용한 absa 작업을 살펴보도록 하자.
+
+
+
+bert는 nlp 작업에서 많은 데이터들 덕에 좋은 성능을 보여주고 있다.
+
+absa 작업을 위해서, 성능은 리뷰 텍스트에서 추가적인 학습을 통해 좋아지고 있다. (파인 튜닝을 이야기 하는 거 같다.)
+
+
+
+absa 태스크를 해결하기 위해서, 이후 훈련 paper는 absa를 question answering problem 으로 만든다. 
+
+리뷰들을 위한 기계 독해 이해 기술 "review reading comprehension" 과 함께
+
+
+
+보조 문장을 구성하여, bert를 사용해 sentence-pair classification task로 absa를 해결하는 것은, 단일 문장 분류를 사용한 이전 최첨단 모델에 비해서 성능이 개선되는 것으로 나타났다.
+
+
+
+보조 문장을 구성하여 BERT를 사용하여 문장 쌍 분류 작업으로 ABSA를 해결하는 것은 단일 문장 분류를 사용한 이전 최첨단 모델에 비해 결과를 개선하는 것으로 나타났다.
+
+
+
+## Experiment
+
+
 
 
 
