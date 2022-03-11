@@ -308,7 +308,7 @@ LDA와 plsa는 최소한의 오류로 본래의 doc word 분포를 재현하는�
 
 
 
-![스크린샷 2022-03-06 오후 4.49.24](/Users/jang-eunjun/Desktop/TIL/DataAnalysis/PaperReview/Top2Vec_Distributed Representations of Topics/스크린샷 2022-03-06 오후 4.49.24.png)
+![스크린샷 2022-03-06 오후 4.49.24](/Users/jang-eunjun/Desktop/TIL/DataAnalysis/PaperReview/Top2Vec_Distributed Representations of Topics/이미지/스크린샷 2022-03-06 오후 4.49.24.png)
 
 
 
@@ -388,8 +388,8 @@ doc2vec 의 DBOW 아키텍처는 word2vec 의 skip-gram model(window 내에서 �
 
    - paragraph 에 id 를 붙인다.
    - PV-DM, PV-DBOW 방식으로 나눔.
-   - ![doc2vec 2](/Users/jang-eunjun/Desktop/TIL/DataAnalysis/PaperReview/Top2Vec_Distributed Representations of Topics/doc2vec 2.png)
-   - ![doc2vec](/Users/jang-eunjun/Desktop/TIL/DataAnalysis/PaperReview/Top2Vec_Distributed Representations of Topics/doc2vec.png)
+   - ![doc2vec 2](/Users/jang-eunjun/Desktop/TIL/DataAnalysis/PaperReview/Top2Vec_Distributed Representations of Topics/이미지/doc2vec 2.png)
+   - ![doc2vec](/Users/jang-eunjun/Desktop/TIL/DataAnalysis/PaperReview/Top2Vec_Distributed Representations of Topics/이미지/doc2vec.png)
    - "the cat sat on the mat"
    - 이는 각 단어가 자신과 유사한 문서를 유인하는 동시에 자신과 다른 문서를 폐기하는 것으로 해석할 수 있다. 
    - 그 결과 문서가 문서를 가장 잘 설명하는 단어와 가장 가깝고 문서와 다른 단어와는 거리가 먼 의미 공간이 형성된다.
@@ -576,7 +576,7 @@ T-distributed 는 t분포를 의미한다. 따라서 t분포에 대해서 알고
 
 
 
-![정규분포](/Users/jang-eunjun/Desktop/TIL/DataAnalysis/PaperReview/Top2Vec_Distributed Representations of Topics/정규분포.png)
+![정규분포](/Users/jang-eunjun/Desktop/TIL/DataAnalysis/PaperReview/Top2Vec_Distributed Representations of Topics/이미지/정규분포.png)
 
 
 
@@ -642,9 +642,9 @@ x= 115 에 대해서 표준화된 값을 살펴보면 다음과 같다.
 
 > Z = 115 - 100 / 제곱근_83.3 = 1.64
 
+![정규분포_표준화](/Users/jang-eunjun/Desktop/TIL/DataAnalysis/PaperReview/Top2Vec_Distributed Representations of Topics/이미지/정규분포_표준화.jpeg)
 
 
-![정규분포_표준화](/Users/jang-eunjun/Desktop/TIL/DataAnalysis/PaperReview/Top2Vec_Distributed Representations of Topics/정규분포_표준화.jpeg)
 
 
 
@@ -744,9 +744,7 @@ t-sne의 기본적인 원리는 고차원의 데이터간 거리를 저차원으
 
 
 
-![t-sne원리](/Users/jang-eunjun/Desktop/TIL/DataAnalysis/PaperReview/Top2Vec_Distributed Representations of Topics/t-sne원리.jpeg)
-
-
+![t-sne원리](/Users/jang-eunjun/Desktop/TIL/DataAnalysis/PaperReview/Top2Vec_Distributed Representations of Topics/이미지/t-sne원리.jpeg)
 
 
 
@@ -768,7 +766,7 @@ t-sne의 기본적인 원리는 고차원의 데이터간 거리를 저차원으
 
 
 
-![스크린샷 2022-03-08 오후 7.02.06](/Users/jang-eunjun/Desktop/TIL/DataAnalysis/PaperReview/Top2Vec_Distributed Representations of Topics/스크린샷 2022-03-08 오후 7.02.06.png)
+![스크린샷 2022-03-08 오후 7.02.06](/Users/jang-eunjun/Desktop/TIL/DataAnalysis/PaperReview/Top2Vec_Distributed Representations of Topics/이미지/스크린샷 2022-03-08 오후 7.02.06.png)
 
 
 
@@ -784,11 +782,11 @@ p_i|j 와 p_j|i 를 구하는 식은 다음과 같다.
 
 
 
-![스크린샷 2022-03-08 오후 7.06.15](/Users/jang-eunjun/Desktop/TIL/DataAnalysis/PaperReview/Top2Vec_Distributed Representations of Topics/스크린샷 2022-03-08 오후 7.06.15.png)
 
 
+![스크린샷 2022-03-08 오후 7.06.08](/Users/jang-eunjun/Desktop/TIL/DataAnalysis/PaperReview/Top2Vec_Distributed Representations of Topics/이미지/스크린샷 2022-03-08 오후 7.06.08.png)
 
-![스크린샷 2022-03-08 오후 7.06.08](/Users/jang-eunjun/Desktop/TIL/DataAnalysis/PaperReview/Top2Vec_Distributed Representations of Topics/스크린샷 2022-03-08 오후 7.06.08.png)
+![스크린샷 2022-03-08 오후 7.06.15](/Users/jang-eunjun/Desktop/TIL/DataAnalysis/PaperReview/Top2Vec_Distributed Representations of Topics/이미지/스크린샷 2022-03-08 오후 7.06.15.png)
 
 
 
@@ -806,9 +804,7 @@ xi를 기준으로 바라보나 xj를 기준으로 바라보나 두 점간의 �
 
 
 
-
-
-![데이터간 유사도 측정](/Users/jang-eunjun/Desktop/TIL/DataAnalysis/PaperReview/Top2Vec_Distributed Representations of Topics/데이터간 유사도 측정.jpeg)
+![데이터간 유사도 측정](/Users/jang-eunjun/Desktop/TIL/DataAnalysis/PaperReview/Top2Vec_Distributed Representations of Topics/이미지/데이터간 유사도 측정.jpeg)
 
 
 
@@ -828,7 +824,7 @@ xi를 기준으로 바라보나 xj를 기준으로 바라보나 두 점간의 �
 
 
 
-![스크린샷 2022-03-08 오후 7.12.48](/Users/jang-eunjun/Desktop/스크린샷 2022-03-08 오후 7.12.48.png)
+![스크린샷 2022-03-08 오후 7.12.48](/Users/jang-eunjun/Desktop/TIL/DataAnalysis/PaperReview/Top2Vec_Distributed Representations of Topics/이미지/스크린샷 2022-03-08 오후 7.12.48.png)
 
 
 
@@ -848,9 +844,9 @@ pij 를 구하는 공식이 qij와 비슷하게 만들어보고 x1을 이상치 
 
 
 
-![스크린샷 2022-03-08 오후 7.21.25](/Users/jang-eunjun/Desktop/스크린샷 2022-03-08 오후 7.21.25.png)
 
 
+![스크린샷 2022-03-08 오후 7.21.25](/Users/jang-eunjun/Desktop/TIL/DataAnalysis/PaperReview/Top2Vec_Distributed Representations of Topics/이미지/스크린샷 2022-03-08 오후 7.21.25.png)
 
 xi가 이상치 데이터이기 때문에 |xi - xj|^ 2은 커지게 되고 전체적인 pij값은 작아지게 된다.
 
@@ -866,7 +862,7 @@ xi가 이상치 데이터이기 때문에 |xi - xj|^ 2은 커지게 되고 전�
 
 역시 마찬가지로 qij를 정규분포 거리인 pij와 비슷하게 정의 된다고 가정해보면 다음 그림과 같다.
 
-![스크린샷 2022-03-08 오후 7.26.17](/Users/jang-eunjun/Desktop/TIL/DataAnalysis/PaperReview/Top2Vec_Distributed Representations of Topics/스크린샷 2022-03-08 오후 7.26.17.png)
+![스크린샷 2022-03-08 오후 7.26.17](/Users/jang-eunjun/Desktop/TIL/DataAnalysis/PaperReview/Top2Vec_Distributed Representations of Topics/이미지/스크린샷 2022-03-08 오후 7.26.17.png)
 
 1. 이렇게 qij 를 정의 하면 yi와 yj 가 거의 유사해서 분자는 무한대에 가까워진다.
 
@@ -876,9 +872,9 @@ xi가 이상치 데이터이기 때문에 |xi - xj|^ 2은 커지게 되고 전�
 
    덕분에 빠르게 학습할 수 있다.
 
-3. 고차원에서 가까웠던 두 데이터를 저차원에서 상대적으로 더 가깝게끔, 고차원에서 멀었던 두 데이터는 저차원에서 상대적으로 더 멀게끔 학습이 가능하다.
+3. 고차원에서 가까웠던 두 데이터를 저차원에서 상대적으로 더 가깝게끔, 고차원에서 멀었던 두 데이터는 저차원에서 상대적으로 더 멀게끔 학습이 가능하다.![data간 거리](/Users/jang-eunjun/Desktop/TIL/DataAnalysis/PaperReview/Top2Vec_Distributed Representations of Topics/이미지/data간 거리.jpeg)
 
-   ![data간 거리](/Users/jang-eunjun/Desktop/TIL/DataAnalysis/PaperReview/Top2Vec_Distributed Representations of Topics/data간 거리.jpeg)
+   
 
    빨간색이 t분포, 검정색이 정규분포. 각 데이터간의 거리(유사도)를 확률로써 판단. 예를 들어서 x1과 x2의 거리는 x1일때의 정규분포의 확률 값과 x2일 때의 정규분포의 확률 값은 거리를 의미한다. **즉 데이터간의 거리를 세로축인 확률로 비교하고 두 확률이 같은 지점에 해당하는 가로축(x)이 데이터가 분포한 위치가 된다. **
 
@@ -934,7 +930,7 @@ umap 의 컨셉도 서로 먼 데이터는 더 멀리 가까운 데이터는 더
 (모호한 단순 복합체)
 
 
-![umap_circle](/Users/jang-eunjun/Desktop/TIL/DataAnalysis/PaperReview/Top2Vec_Distributed Representations of Topics/umap_circle.jpeg)
+![umap_circle](/Users/jang-eunjun/Desktop/TIL/DataAnalysis/PaperReview/Top2Vec_Distributed Representations of Topics/이미지/umap_circle.jpeg)
 
 
 
@@ -980,7 +976,7 @@ ex) 0 simplex 는 한 개의 점, 1-simplex 는 2개의 점으로 이루어진 �
 
 
 
-![simplex image](/Users/jang-eunjun/Desktop/TIL/DataAnalysis/PaperReview/Top2Vec_Distributed Representations of Topics/simplex image.png)
+![simplex image](/Users/jang-eunjun/Desktop/TIL/DataAnalysis/PaperReview/Top2Vec_Distributed Representations of Topics/이미지/simplex image.png)
 
 
 
@@ -996,9 +992,9 @@ ex) 0 simplex 는 한 개의 점, 1-simplex 는 2개의 점으로 이루어진 �
 
 
 
+![Čech complex](/Users/jang-eunjun/Desktop/TIL/DataAnalysis/PaperReview/Top2Vec_Distributed Representations of Topics/이미지/Čech complex.jpeg)
 
 
-![Čech complex](/Users/jang-eunjun/Desktop/TIL/DataAnalysis/PaperReview/Top2Vec_Distributed Representations of Topics/Čech complex.jpeg)
 
 
 
@@ -1036,7 +1032,7 @@ ex) 0 simplex 는 한 개의 점, 1-simplex 는 2개의 점으로 이루어진 �
 
 
 
-![decide size of a circle](/Users/jang-eunjun/Desktop/TIL/DataAnalysis/PaperReview/Top2Vec_Distributed Representations of Topics/decide size of a circle.jpeg)
+![decide size of a circle](/Users/jang-eunjun/Desktop/TIL/DataAnalysis/PaperReview/Top2Vec_Distributed Representations of Topics/이미지/decide size of a circle.jpeg)
 
 
 
@@ -1116,9 +1112,7 @@ HDBSCAN 은 각각의 doc밀집 지역에 label 을 부여한다. 그리고 밀�
 
 
 
-![스크린샷 2022-03-06 오후 7.33.02](/Users/jang-eunjun/Desktop/TIL/DataAnalysis/PaperReview/Top2Vec_Distributed Representations of Topics/스크린샷 2022-03-06 오후 7.33.02.png)
-
-
+![스크린샷 2022-03-06 오후 7.33.02](/Users/jang-eunjun/Desktop/TIL/DataAnalysis/PaperReview/Top2Vec_Distributed Representations of Topics/이미지/스크린샷 2022-03-06 오후 7.33.02.png)
 
 이 그림은 umap 차원 축소를 이용한 벡터들을 이용해서 HDBSCAN 군집화를 이용한 그림이다.
 
@@ -1170,7 +1164,7 @@ doc 벡터들에 의해서 토픽 벡터가 계산될 수 있는 방법은 여�
 
 
 
-![스크린샷 2022-03-06 오후 8.07.41](/Users/jang-eunjun/Desktop/TIL/DataAnalysis/PaperReview/Top2Vec_Distributed Representations of Topics/스크린샷 2022-03-06 오후 8.07.41.png)
+![스크린샷 2022-03-06 오후 8.07.41](/Users/jang-eunjun/Desktop/TIL/DataAnalysis/PaperReview/Top2Vec_Distributed Representations of Topics/이미지/스크린샷 2022-03-06 오후 8.07.41.png)
 
 
 
