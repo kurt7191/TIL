@@ -20,7 +20,7 @@ LDA의 첫 번째 배경
 
 
 
-![스크린샷 2022-03-03 오후 8.08.59](/Users/jang-eunjun/Desktop/TIL/DataAnalysis/PaperReview/LDA/스크린샷 2022-03-03 오후 8.08.59.png)
+![스크린샷 2022-03-03 오후 8.08.59](/Users/jang-eunjun/Desktop/TIL/DataAnalysis/PaperReview/TopicModeling/LDA/스크린샷 2022-03-03 오후 8.08.59.png)
 
 
 
@@ -32,7 +32,7 @@ LDA의 첫 번째 배경
 
       이렇게 되면 각각의 토픽마다 사용하는 단어의 분포가 다르게 되고 토픽별로 단어 사용 분포를 표현할 수 있을 것이다.
 
-   2. 각각의 doc들은 corpus-wide-topics 의 mixture 다. 문서가 다르다고 해서 문서 집합의 corpus에서의 토픽의 비중(단어들의 비중)은 변하지 않는다. => 전체 문서에 대 해서 봤더니 ~% ~% ~%의 토픽으로 섞여있다고 생각할 수 있다.
+   2. 각각의 doc들은 corpus-wide-topics 의 mixture 다. 문서가 다르다고 해서 문서 집합의 corpus에서의 토픽의 비중(단어들의 비중)은 변하지 않는다. => 전체 문서에 대해서 봤더니 ~% ~% ~%의 토픽으로 섞여있다고 생각할 수 있다.
 
    3. 단어들은 각 토픽에서부터 sampling 해서 생성이 된다.
 
@@ -55,7 +55,7 @@ LDA의 첫 번째 배경
    
    
 
-   ![lda_issue](/Users/jang-eunjun/Desktop/TIL/DataAnalysis/PaperReview/LDA/lda_issue.png)
+   ![lda_issue](/Users/jang-eunjun/Desktop/TIL/DataAnalysis/PaperReview/TopicModeling/LDA/lda_issue.png)
 
    LDA 첫 번째 가정에 대한 **issue** 그리고 issue 를 해결하기 위한 **inference** : 
 
@@ -113,7 +113,7 @@ LDA의 첫 번째 배경
 
    <hr>
 
-   ![다운로드](/Users/jang-eunjun/Desktop/TIL/DataAnalysis/PaperReview/LDA/다운로드.png)
+   ![다운로드](/Users/jang-eunjun/Desktop/TIL/DataAnalysis/PaperReview/TopicModeling/LDA/다운로드.png)
 
    1. assumtion 이라는 가정을 encoding
    2. 다시 결합 확률 분포로 factorize
@@ -202,7 +202,7 @@ LDA의 첫 번째 배경
 
    
 
-   ![스크린샷 2022-03-03 오후 9.24.58](/Users/jang-eunjun/Desktop/TIL/DataAnalysis/PaperReview/LDA/스크린샷 2022-03-03 오후 9.24.58.png)
+   ![스크린샷 2022-03-03 오후 9.24.58](/Users/jang-eunjun/Desktop/TIL/DataAnalysis/PaperReview/TopicModeling/LDA/스크린샷 2022-03-03 오후 9.24.58.png)
 
    P(𝜙1:K, 𝜽1:D, Z1:D, W1:D ) => 모든 토픽들에 대해서, 모든 문서에 대해서, 모든 문서에 대해서, 모든 문서에 대해서 
 
@@ -245,7 +245,7 @@ LDA의 첫 번째 배경
    2. For each document
 
       - Draw topic proportions  𝜽_d ~ Dir(𝛂) : 𝛂 하이퍼파라미터를 가지는 Dirichlet 분포로부터 특정 document의 토픽의 비중 𝜽_d 을 추론한다.
-      - ![스크린샷 2022-03-03 오후 9.52.31](/Users/jang-eunjun/Desktop/TIL/DataAnalysis/PaperReview/LDA/스크린샷 2022-03-03 오후 9.52.31.png)
+      - ![스크린샷 2022-03-03 오후 9.52.31](/Users/jang-eunjun/Desktop/TIL/DataAnalysis/PaperReview/TopicModeling/LDA/스크린샷 2022-03-03 오후 9.52.31.png)
       - 문서마다 토픽의 비중을 할당하겠다 ! (알파 파라미터를 가지는 디리슐레 분포를 통해서!)
       - For each word
         - **Draw Zd,n ~ Multi(𝜽_d)**
@@ -254,7 +254,7 @@ LDA의 첫 번째 배경
         - 30, 50,20 일때 1,2,3 번째 단어를 어떤 토픽에서 뽑지? 를 다항 분포로부터 결정한다.
         - ![스크린샷 2022-03-03 오후 10.00.22](/Users/jang-eunjun/Desktop/스크린샷 2022-03-03 오후 10.00.22.png)
         - Draw W_d,n ~ Multi(𝜙_zd,n,n)
-        - ![스크린샷 2022-03-04 오전 7.23.35](/Users/jang-eunjun/Desktop/TIL/DataAnalysis/PaperReview/LDA/스크린샷 2022-03-04 오전 7.23.35.png)
+        - ![스크린샷 2022-03-04 오전 7.23.35](/Users/jang-eunjun/Desktop/TIL/DataAnalysis/PaperReview/TopicModeling/LDA/스크린샷 2022-03-04 오전 7.23.35.png)
 
       
 
