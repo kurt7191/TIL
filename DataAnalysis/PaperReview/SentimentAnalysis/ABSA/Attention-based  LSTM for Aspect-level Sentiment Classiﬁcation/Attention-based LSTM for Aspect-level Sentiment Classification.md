@@ -292,7 +292,7 @@ Aspect 정보는 aspect 가 주어진 하나의 문장의 감성 극성을 분�
 
 
 
-#### Attentionbased LSTM(AT-LSTM)
+#### Attention based LSTM(AT-LSTM)
 
 
 
@@ -564,7 +564,6 @@ EX)
 
 
 <hr>
-
 
 
 

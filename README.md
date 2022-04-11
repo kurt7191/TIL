@@ -16,17 +16,17 @@
 
   
 
-
-
 ### To do List(this week)
 
 
 
-1. Term proposal ppt 만들기(영진님과 회의 이후) => 이번주 일요일까지 완성
-2. 확률과 통계 수업 => 이번주 일요일까지 완성
-3. 마케팅 인텔리전스 수업 => 이번주 금요일까지 듣기
-4. 머신러닝 전처리 (천천히)
-5. 논문 서칭 (천천히)
+1. Term proposal ppt 최종본 완성 (영진님과 회의 이후) => 이번주 일요일까지 완성
+2. 머신러닝 전처리
+3. 확률과 통계 시험 공부 (하루에 1주차씩 7주차까지) => 일요일까지
+4. 논문 리딩 및 리뷰
+   - An Unsupervised Neural Attention Model for Aspect Extraction
+   - Content  Attention  Model for  Aspect Based Sentiment Analysis
+   - Interactive Attention Networks for Aspect-Level Sentiment Classiﬁcation
 
 
 
