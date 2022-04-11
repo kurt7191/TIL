@@ -44,7 +44,7 @@ Neural word embedding(단어 vector화를 통해서) 의 분포를 이용하면�
 
 - 우리가 sentiment analysis based on aspect 를 할 때 가장 중요한 것 중 하나는 분석할 aspect 를 추출하는 것이다.
 
-  그 작업을 표현된 opinions (review 같은 것) 에서 entity aspect 를 추출하는 것이다.
+  표현된 opinions (review 같은 것) 에서 entity aspect 를 추출하는 것이다.
 
   예를 들어서 문장 "The beef was tender and melted in my mouth" 이 있다고 하자.
 
@@ -146,7 +146,7 @@ LDA based model 과 대조적으로, 우리가 제안한 방법은 명시적으�
 
 - Aspect 를 추출하는 과정은 최초로 Rule 기반이었다.
 
-  - HU 와 LIU 는 빈번하게 등장하는 명사들과 명사구를 찾는 것을 통해 상품들의 특징들을 추출하기를 제안했다.
+  - HU 와 LIU(사람임) 는 빈번하게 등장하는 명사들과 명사구를 찾는 것을 통해 상품들의 특징들을 추출하기를 제안했다.
 
   - 그들은 또한 WordNet을 통해 opinion seed words 의 동의어 반의어를 찾음으로써 opinion term 들을 추출했다.
 
@@ -185,37 +185,55 @@ LDA based model 과 대조적으로, 우리가 제안한 방법은 명시적으�
 
 ABAE 모델을 이 section 에서 제안한다.
 
-궁극적인 목적은 embedding space에서 가장 가까운 단어들을 관찰함으로써 해석될 수 있는 각각의 aspect의 집합을 학습하는 것이다.
+##### 궁극적인 목적은 embedding space에서 가장 가까운 단어들을 관찰함으로써 해석될 수 있는 각각의 aspect의 집합을 학습하는 것이다. (위에서 살펴봤듯이 aspect term 들의 군집 개체 하나를 하나의 aspect 로 간주한다.)
 
 
 
 - vocabulary 안에 있는 단어 w를 feature vector e_W에 연관짓는다.
+- 우리는 word embedding을 **feature vector**를 위해서 사용한다. 왜냐하면 word embedding 들은 종종 문맥안에서 동시 발생하는 단어들을 embedding space 내에서 가깝게 위치한 point에 매핑하기 위해서 설계되어져 있기 때문이다.(word2vec)
+- word embedding matrix E(V x d) 의 행에 일치하는 단어들과 feature vectors 들은 연관되어있다. (V는 vocabulary size를 의미한다.)
+- 다른 words 들과 똑같은 embedding space(차원 동일) 를 공유하고 있는 aspects 들의 embedding 을 얻는게 목적.
+- aspect embedding matrix T를 만들 수 있는데 이는 k x d의 shape 을 가진다. k는 정의된 aspect 의 개수를 의미하고, d는 차원을 의미한다. 당연스럽게 본래 vocabulary 에서 aspect 들을 추출하는 것이기 때문에 k는 V보다 적다.(k < V)
+- aspect embedding들은 aspect word들에 근사하는데 사용되어진다. 여기서 asepct word 들은 attention mechanism 에 의해서 필터링된다.
 
-- 우리는 word embedding을 **feature vector**를 위해서 사용한다. 왜냐하면 word embedding 들은 종종 문맥안에서 동시 발생하는 단어들을 embedding space 내에서 가깝게 위치한 point에 매핑하기 위해서 설계되어져 있기 때문이다.
+- ABAE 에 대한 각각의 input sample 은 review 문장에 있는 단어들에 대한 index들의 리스트이다. (정확하게 무슨 말이지?) => input 이 주어지면 두 단계들이 수행된다.
+  - attention mechanism을 통해서 aspect words들이 아닌 단어들에 대해 weight를 낮게 주면서 non_aspect 단어들을 걸러낸다. 그리고 weighted 된 word embeddings 들을 통해서 문장 임베딩 Z_s를 구조화한다. (sentence embeiddng인 Z_s를 만들었는데, attention mechanism 을 통해서 덜 중요한 단어들에 대해서 낮은 weigh를 준 sentence embedding임 ) => 문장 임베딩 Z_s 생성
+  - T matrix(aspect embedding들의 matrix) 로부터의 aspect embeddings의 선형 결합으로써 문장(sentence) embedding 을 다시 구조화(re-construct) 하는 것을 시도한다.
+    - 이 re-constructions(r_s)과 차원 축소는 (ABAE가 첫번째로 필터링된 문장들의 embedding인 Z_s를 최소한의 축소를 수행한 re-construct된 r_s embedding으로 전환하는걸 목표로 하는) k 임베드 space 안에서 aspect 단어들의 최대한의 정보를 보존한다. (Z_s -> r_s 로 re-construct 하는데, 이 작업을 통해 aspect 단어들의 최대한의 정보를 보존한다는 것 같음)
+      - 더 자세한 과정은 논문의 밑의 세부적인 설명을 들어야 하는 듯.
 
-- word embedding matrix E(V x d) 의 행에 일치하는 단어들과 feature vectors 들은 연관되어있다. (vocabulary size)
 
-- d
 
-- d
 
-- d
 
-- d
 
-- d
 
-- d
+### Sentence Embedding with Attention Mechanism
+
+
+
+- ABAE 모델은 첫 번째 step으로 input sentence (s) 에 대해서 vector 표현 z_s 를 만든다.
+
+  - ![스크린샷 2022-04-11 오전 10.43.22](/Volumes/GoogleDrive-116207538797775600332/내 드라이브/타이포라_source/스크린샷 2022-04-11 오전 10.43.22.png)
+
+  - 논문의 저자들은 sentence의 aspect(topic) 와 최대한 관련된 정보들을 포착한 sentence의 vector 표현을 구하려고 한다.
+  - 이때 논문의 저자들은 z_s는 sentence 내의 n개의 문장들의 word embedding 의 가중합으로 정의한다. (e_w_i)
+  - 이때 가중치를 a_i (i는 sentence내의 word의 index) 라고 표현한다. 이는 i번째 단어 w_i가 sentence 의 주요 topic을 잘 포착하는 것에 중점을 둔 올바른 단어일 확률이다.
+    - a_i는 sentence의 topic을 word가 잘 표현할 확률을 의미하는데, attention mechanism을 활용해서 계산된다. 
+    - attention model 은 sentence의 전체적인 맥락 뿐만 아니라 단어 e_w_i에 조건을 둔 attention model 이다.
+    - ![스크린샷 2022-04-11 오전 10.53.35](/Volumes/GoogleDrive-116207538797775600332/내 드라이브/타이포라_source/스크린샷 2022-04-11 오전 10.53.35-9642039.png)
+    -   y_s는 word_embeddings들의 평균 값이다. 논문 저자들은 y_s가 sentence의 권역 맥락을 가장 잘 고려했다고 믿는다.
+    - M(dxd) matrix 는 권역 맥락 embedding y_s 와 word embedding e_w 사이를 매핑한 matrix다. 그리고 학습 과정의 부분으로서 학습된다. (나는 sentence 내의 word representation의 평균 값인 y_s와 sentence 내의 각각의 word embedding 과의 유사도 매핑으로 이해했다. 이게 맞나??)
+    - 논문의 저자들은 attention mechanism 을 두 개의 step process로 간주했다.
+      - sentence 가 주어지면 sentence에 대한 표현을 sentence 내의 모든 word representation 의 평균으로 계산한다.
+      - 그 다음 두 가지를 고려하여 word의 weight이 할당된다.
+        - 첫 번째로, k aspects들과 관련있는 word를 포착할 수 있는 변형 M을 통해서 word를 걸러낸다.
+        - 그리고 sentence에 대해 필터링된 word와의 관련성을 포착한다. (전역 context y_s에 대해서 필터링된 word의 내적을 취함으로써)
+    - ㅇ
+    - 
+    - 
+
+- ㅇㅇ
 
 - 
-
-  
-
-
-
-
-
-
-
-
 

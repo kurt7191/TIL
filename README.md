@@ -24,9 +24,9 @@
 2. 머신러닝 전처리
 3. 확률과 통계 시험 공부 (하루에 1주차씩 7주차까지) => 일요일까지
 4. 논문 리딩 및 리뷰
-   - An Unsupervised Neural Attention Model for Aspect Extraction
-   - Content  Attention  Model for  Aspect Based Sentiment Analysis
-   - Interactive Attention Networks for Aspect-Level Sentiment Classiﬁcation
+   - An Unsupervised Neural Attention Model for Aspect Extraction(화)
+   - Content  Attention  Model for  Aspect Based Sentiment Analysis(수,목)
+   - Interactive Attention Networks for Aspect-Level Sentiment Classiﬁcation(금,주말)
 
 
 
